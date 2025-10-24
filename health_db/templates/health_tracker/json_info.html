@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Записать данные {% endblock title %}
+{% block content %}
+    <a href = "{% url 'HomePage' %}">
+        <button> Назад </button>
+    </a>
+    
+    {% if error %}
+        <p>Ошибка: {{ error }}</p>
+
+    {% else %}
+        {% for key, value in data.items %}
+            {%if key == name %}
+                <h2>{{user_name}}</h2>
+                <ul>
+                    {% for key_note, value_note in value.items%}
+                        {% if key_note != 'title' %}
+                            <li>
+                                <p>{{ key_note }}-{{ value_note }}</p>
+                            </li>
+                        {% endif %}
+                    {% endfor %}                        
+                </ul>
+            {%endif%}
+        {% endfor %}
+    {% endif %}
+{% endblock content %}
