@@ -3,38 +3,42 @@
 {% block content %}
     <p style = "font-size: 20px; font-weight: bold;">Добро пожаловать!</p>
     <p>На этом сайте вы можете добавить показатели своего здоровья или загрузить их из файла</p>
-    <a href = "{% url 'HealthForm' %}">
-        <button> Добавить запись </button>
-    </a>
-    <a href = "{% url 'UploadedFileForm' %}">
-        <button> Загрузить файл </button>
-    </a>
+    <div class = "d-grid gap-2">    
+        <a href = "{% url 'HealthForm' %}">
+            <button class = 'btn btn-primary btn-lg'> Добавить запись </button>
+        </a>
+        <a href = "{% url 'UploadedFileForm' %}">
+            <button class = 'btn btn-outline-primary btn-lg'> Загрузить файл </button>
+        </a>
+    </div>
     
-    <div class = "chooseOutput">
-        <input type = "radio" name = "outputType" value = "file" checked/>
+    <div class = "d-grid col-6 mx-auto" style = "margin-top: 10px; margin-bottom: 10px;">
+        <input class="form-check-input" type = "radio" name = "outputType" value = "file" checked/>
         <label> Вывод из файла </label>
 
-        <input type = "radio" name = "outputType" value = "database"/>
+        <input class="form-check-input" type = "radio" name = "outputType" value = "database"/>
         <label> Вывод из базы данных </label>
     </div>
 
     <p>Добавленные записи</p>
-    <div id = "file_output">
-        <ul>
-            {% for file, name in file_names.items %}
-                <p><a href="{% url 'JSONInfo' file %}">{{ name }}</a></p>
-            {% empty %}
-                <p> Нет записей </p>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div id = "db_output" style="display: none; text-align: center;">
-        <div class = "searchContainer">
-            <input type = "text" id = "searchInput" placeholder = "Поиск по имени:" autocomplete = "off">
+    <div class = "gap-3">
+        <div id = "file_output">
+            <ul class="list-group list-group-flush">
+                {% for file, name in file_names.items %}
+                    <li class="list-group-item"><a href="{% url 'JSONInfo' file %}">{{ name }}</a></li>
+                {% empty %}
+                    <p> Нет записей </p>
+                {% endfor %}
+            </ul>
         </div>
-        
-        <div class = "searchResults"></div>
+
+        <div id = "db_output" style="display: none; text-align: center;">
+            <div class = "searchContainer">
+                <input type = "text" id = "searchInput" placeholder = "Поиск по имени:" autocomplete = "off">
+            </div>
+            
+            <div class = "searchResults"></div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -81,11 +85,11 @@
                 return;
             }
 
-            let html = '<ul>';
+            let html = '<ul class="list-group list-group-flush">';
             searched_notes.forEach(function(note) {
                 note_url = `/showDB/${ note.id }/`;
                 html += `
-                        <li><a href='${ note_url }'>${ note.name }</a></li>
+                        <li class="list-group-item"><a href='${ note_url }'>${ note.name }</a></li>
                 `;
             });
             html += '</ul>'

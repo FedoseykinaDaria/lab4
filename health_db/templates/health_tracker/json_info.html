@@ -2,7 +2,7 @@
 {% block title %} Данные о записи в JSON {% endblock title %}
 {% block content %}
     <a href = "{% url 'HomePage' %}">
-        <button> Назад </button>
+        <button class = 'btn btn-outline-primary btn-sm'> Назад </button>
     </a>
     
     {% if error %}
@@ -15,7 +15,7 @@
                 <ul>
                     {% for key_note, value_note in value.items%}
                         {% if key_note != 'title' %}
-                            <li>
+                            <li class="list-group-item">
                                 <p>{{ key_note }}-{{ value_note }}</p>
                             </li>
                         {% endif %}

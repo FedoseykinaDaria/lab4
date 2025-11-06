@@ -2,16 +2,19 @@
 {% block title %} Записать данные {% endblock title %}
 {% block content %}
     <a href = "{% url 'HomePage' %}">
-        <button> Назад </button>
+        <button class = 'btn btn-outline-primary btn-sm'> Назад </button>
     </a>
 
     <h2>{{db_object.name}}</h2>
-    <a href = "{% url 'noteUpdate' db_object.id %}"><button> Редактировать запись </button></a>
-    <a href = "{% url 'noteRemove' db_object.id %}"><button> Удалить запись </button></a>
+    <div class = "gap-4 d-md-flex justify-content-center" style="margin: 1rem;">
+        <a href = "{% url 'noteUpdate' db_object.id %}"><button class = 'btn btn-primary btn-sm'> Редактировать запись </button></a>
+        <a href = "{% url 'noteRemove' db_object.id %}"><button class = 'btn btn-outline-danger btn-sm'> Удалить запись </button></a>
+    </div>
+    
     <ul>
         {% for key, value in db_object.items %}
             {% if key != 'id' and key != 'name' %}
-                <li>
+                <li class="list-group-item">
                     <p>{{ key }}-{{ value }}</p>
                 </li>
             {% endif %}
