@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.HomePage, name = 'HomePage'),
     path('form/', views.HealthForm, name = 'HealthForm'),
     path('file/', views.UploadedFileForm, name = "UploadedFileForm"),
-    path('show/<str:name>/', views.JSONInfo, name = 'JSONInfo')
+    path('showJSON/<str:name>/', views.JSONInfo, name = 'JSONInfo'),
+    path('showDB/<int:note_id>/', views.DBInfo, name = 'DBInfo')
 ]

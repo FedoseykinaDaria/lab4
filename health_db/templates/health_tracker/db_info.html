@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %} Записать данные {% endblock title %}
+{% block content %}
+    <a href = "{% url 'HomePage' %}">
+        <button> Назад </button>
+    </a>
+
+    <h2>{{db_object.name}}</h2>
+    <ul>
+        {% for key, value in db_object.items %}
+            {% if key != 'id' and key != 'name' %}
+                <li>
+                    <p>{{ key }}-{{ value }}</p>
+                </li>
+            {% endif %}
+        {% endfor %}                        
+    </ul>
+{% endblock content %}

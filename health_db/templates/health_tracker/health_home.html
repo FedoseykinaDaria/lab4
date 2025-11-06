@@ -10,12 +10,51 @@
         <button> Загрузить файл </button>
     </a>
 
+    <a>
+        <button> Поиск записей в базе </button>
+    </a>
+    
+    <div class = "chooseOutput">
+        <input type = "radio" name = "outputType" value = "file" checked/>
+        <label> Вывод из файла </label>
+
+        <input type = "radio" name = "outputType" value = "database"/>
+        <label> Вывод из базы данных </label>
+    </div>
+
     <p>Добавленные записи</p>
-    <ul>
-        {% for file, name in file_names.items %}
-            <p><a href="{% url 'JSONInfo' file %}">{{ name }}</a></p>
-        {% empty %}
-            <p> Нет записей </p>
-        {% endfor %}
-    </ul>
+    <div id = "file_output">
+        <ul>
+            {% for file, name in file_names.items %}
+                <p><a href="{% url 'JSONInfo' file %}">{{ name }}</a></p>
+            {% empty %}
+                <p> Нет записей </p>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id = "db_output" style="display: none;">
+        <ul>
+            {% for note in notes_db%}
+                <p><a href="{% url 'DBInfo' note.id %}">{{ note.name }}</a></p>
+            {% empty %}
+                <p> Нет записей </p>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        document.querySelectorAll('input[type="radio"][name="outputType"]').forEach(radio =>{
+            radio.addEventListener('change', function(){
+                if (radio.value == "database"){
+                    document.getElementById("file_output").style.display = 'none';
+                    document.getElementById("db_output").style.display = 'block';
+                }
+                else{
+                    document.getElementById("file_output").style.display = 'block';
+                    document.getElementById("db_output").style.display = 'none';
+                }
+            });
+        });
+    </script>
 {% endblock content%}

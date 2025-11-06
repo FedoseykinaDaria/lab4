@@ -13,6 +13,7 @@ import json
 
 folder_path = os.path.join(settings.BASE_DIR, 'Health')
 file_names = {}
+notes_db = list(Note.objects.all())
 
 #Сохранение данных с формы пользователя в файл
 def SaveUserData(data):
@@ -101,9 +102,9 @@ def HomePage(request):
         for key, value in health.items():
             file_names[key] = value['title']
 
-    return render(request, 'health_tracker/health_home.html', {'file_names': file_names})
+    return render(request, 'health_tracker/health_home.html', {'file_names': file_names, 'notes_db': notes_db})
 
-#Передача информации о файле
+#Передача информации о записи из файла
 def JSONInfo(request, name):
     file_path = os.path.join(settings.BASE_DIR, 'Health', 'health.json')
 
@@ -116,6 +117,11 @@ def JSONInfo(request, name):
             return render(request, 'health_tracker/json_info.html', {'name': name, 'error': 'Ошибка чтения'})
     else:
         return render(request, 'health_tracker/json_info.html', {'name': name, 'error': 'Файл не найден'})
+
+#Передача информации о записи из базы данных
+def DBInfo(request, note_id):
+    db_object = Note.objects.values().get(id = note_id)
+    return render(request, 'health_tracker/db_info.html', {'db_object':db_object})
 
 #Генерация уникального имения для файла
 def FileName(file):
