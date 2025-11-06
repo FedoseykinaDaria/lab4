@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
-from django.http import FileResponse, HttpResponseRedirect
+from django.http import FileResponse, HttpResponseRedirect, JsonResponse
 from django.views.static import serve
 
 from .health_form import HealthNote
@@ -137,3 +137,20 @@ def FileName(file):
     unique_name = str(uuid.uuid4())
     
     return f"{unique_name}{ext}"
+
+#AJAX поиск
+def DBSearch(request):
+    if request.method == 'GET' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        search_name = request.GET.get('query', '').strip()
+
+        if search_name:
+            searched_notes = Note.objects.filter(name__icontains=search_name)
+        else:
+            searched_notes = Note.objects.all()
+        
+        searched_notes_data = []
+        for note in searched_notes:
+            searched_notes_data.append({'id': note.id, 'name': note.name})
+        
+        return JsonResponse({'success': True, 'searched_notes': searched_notes_data})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
