@@ -7,5 +7,7 @@ urlpatterns = [
     path('file/', views.UploadedFileForm, name = "UploadedFileForm"),
     path('showJSON/<str:name>/', views.JSONInfo, name = 'JSONInfo'),
     path('showDB/<int:note_id>/', views.DBInfo, name = 'DBInfo'),
-    path('search/', views.DBSearch, name = 'DBSearch')
+    path('search/', views.DBSearch, name = 'DBSearch'),
+    path('update/<int:note_id>/', views.noteUpdate, name = 'noteUpdate'),
+    path('delete/<int:note_id>/', views.noteRemove, name = 'noteRemove')
 ]

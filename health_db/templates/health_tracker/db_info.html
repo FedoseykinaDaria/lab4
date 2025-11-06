@@ -6,6 +6,8 @@
     </a>
 
     <h2>{{db_object.name}}</h2>
+    <a href = "{% url 'noteUpdate' db_object.id %}"><button> Редактировать запись </button></a>
+    <a href = "{% url 'noteRemove' db_object.id %}"><button> Удалить запись </button></a>
     <ul>
         {% for key, value in db_object.items %}
             {% if key != 'id' and key != 'name' %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.http import FileResponse, HttpResponseRedirect, JsonResponse
 from django.views.static import serve
@@ -154,3 +154,23 @@ def DBSearch(request):
         
         return JsonResponse({'success': True, 'searched_notes': searched_notes_data})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+#Обновление записи
+def noteUpdate(request, note_id):
+    db_object = Note.objects.values().get(id = note_id)
+
+    if request.method == "POST":
+        form = HealthNote(request.POST)
+        
+        if form.is_valid():
+            Note.objects.filter(id=note_id).update(**form.cleaned_data)
+            return HttpResponseRedirect(f'/showDB/{ note_id }/')
+    else:
+        form = HealthNote(initial=db_object)
+    return render(request, 'health_tracker/db_update.html', {'form': form})
+
+#Удаление записи
+def noteRemove(request, note_id):
+    db_object = Note.objects.get(id = note_id)
+    db_object.delete()
+    return HttpResponseRedirect('/')

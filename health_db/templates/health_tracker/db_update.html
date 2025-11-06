@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Редактирвоание записи {% endblock title %}
+{% block content %}
+<a href = '/showDB/${ note.id }/'>
+        <button> Вернуться к записи </button>
+    </a>
+<form method = 'post'>
+    {% csrf_token %}
+    {{form.as_p}}
+<button type = "submit"> Изменить запись! </button>
+{% endblock content %}
