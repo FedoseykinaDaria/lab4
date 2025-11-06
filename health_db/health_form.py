@@ -1,4 +1,5 @@
 from django import forms
+from .models import Note
 
 class HealthNote(forms.Form):
     name = forms.CharField(label = 'Как вас зовут?', max_length = 200)
@@ -9,3 +10,11 @@ class HealthNote(forms.Form):
     glucose = forms.IntegerField(label = 'Какой у вас уровень глюкозы? (ммоль/л)', min_value = 0)
     sleep_time = forms.IntegerField(label = 'Какая у вас средняя продолжительность сна?', min_value = 0)
     BMI = forms.IntegerField(label = 'Какой у вас индекс массы тела?', min_value = 0)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        duplicate = Note.objects.filter(**cleaned_data)
+        if duplicate.exists():
+            raise forms.ValidationError('Такая запись уже существует, проверьте свои данные!')
+        return cleaned_data

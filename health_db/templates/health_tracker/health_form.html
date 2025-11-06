@@ -9,6 +9,16 @@
     <form method = 'post'>
         {% csrf_token %}
         {{form.as_p}}
+        
+        <p>Куда записать ваши данные?</p>
+        <div class = "chooseOutput">
+            <input type = "radio" name = "outputType" value = "file" checked/>
+            <label> Файл </label>
+
+            <input type = "radio" name = "outputType" value = "database"/>
+            <label> База данных </label>
+        </div>
+
         <button type = "submit"> Добавить запись! </button>
     </form>
 {% endblock content %}

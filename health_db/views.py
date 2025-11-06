@@ -5,6 +5,7 @@ from django.views.static import serve
 
 from .health_form import HealthNote
 from .file_form import UploadFile
+from .models import Note
 
 import os
 import uuid
@@ -13,7 +14,7 @@ import json
 folder_path = os.path.join(settings.BASE_DIR, 'Health')
 file_names = {}
 
-#Сохранение данных с формы пользователя
+#Сохранение данных с формы пользователя в файл
 def SaveUserData(data):
     os.makedirs(folder_path, exist_ok = True)
 
@@ -31,12 +32,19 @@ def SaveUserData(data):
         f.seek(0, 0)
         json.dump(health, f, ensure_ascii = False, indent = 4)
 
+#Сохранение данных с формы пользователя в базу
+def SaveUserDataDB(data):
+    health = Note.objects.create(**data)
+
 #Загрузка формы
 def HealthForm(request):
     if request.method == 'POST':
         form = HealthNote(request.POST)
         if form.is_valid():
-            SaveUserData(form.cleaned_data)
+            if request.POST.get("outputType") == "file":
+                SaveUserData(form.cleaned_data)
+            else:
+                SaveUserDataDB(form.cleaned_data)
             return HttpResponseRedirect('/')
     
     else: 
@@ -84,7 +92,6 @@ def HandleUploadedFile(data, upload_file):
 def HomePage(request):
     file_path = os.path.join(folder_path, 'health.json')
 
-    print(file_path)
     if not os.path.exists(file_path):
         with open(file_path, 'w') as f:
             json.dump({}, f)
