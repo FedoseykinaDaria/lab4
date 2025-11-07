@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %} Редактирвоание записи {% endblock title %}
+{% block title %} Редактирование записи {% endblock title %}
 {% block content %}
-<a href = '/showDB/${ note.id }/'>
+<a href = '/showDB/{{ id }}/'>
         <button class = 'btn btn-outline-primary btn-sm'> Вернуться к записи </button>
     </a>
 <form method = 'post'>

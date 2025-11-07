@@ -167,7 +167,7 @@ def noteUpdate(request, note_id):
             return HttpResponseRedirect(f'/showDB/{ note_id }/')
     else:
         form = HealthNote(initial=db_object)
-    return render(request, 'health_tracker/db_update.html', {'form': form})
+    return render(request, 'health_tracker/db_update.html', {'form': form, 'id': note_id})
 
 #Удаление записи
 def noteRemove(request, note_id):
