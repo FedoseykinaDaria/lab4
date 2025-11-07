@@ -102,7 +102,7 @@ def HomePage(request):
         for key, value in health.items():
             file_names[key] = value['title']
 
-    return render(request, 'health_tracker/health_home.html', {'file_names': file_names, 'notes_db': notes_db})
+    return render(request, 'health_tracker/index.html', {'file_names': file_names, 'notes_db': notes_db})
 
 #Передача информации о записи из файла
 def JSONInfo(request, name):
