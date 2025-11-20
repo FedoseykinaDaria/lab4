@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
-#'django-insecure-0qtx4rbg2m0)^*shq&w-z)pofz&x&!t)jy*+7d*9fhyif8h^g@'
+SECRET_KEY = 'django-insecure-0qtx4rbg2m0)^*shq&w-z)pofz&x&!t)jy*+7d*9fhyif8h^g@'
+#os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
-#True
+DEBUG = True
+#bool(os.environ.get("DEBUG", default=0))
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
-#[]
+
+ALLOWED_HOSTS = []
+#os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
+
 
 # Application definition
 
@@ -75,10 +78,20 @@ WSGI_APPLICATION = 'lab4.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'health_db',
+        'USER': 'django_admin',
+        'PASSWORD': 'passw0rd',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

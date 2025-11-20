@@ -1,18 +1,5 @@
 services:
-  db:
-    image: postgres:17
-    environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - .env
- 
-  django-web:
+  web:
     build: .
     container_name: lab5
     ports:
@@ -33,5 +20,19 @@ services:
       DATABASE_PORT: ${DATABASE_PORT}
     env_file:
       - .env
+      
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+ 
 volumes:
     postgres_data:
