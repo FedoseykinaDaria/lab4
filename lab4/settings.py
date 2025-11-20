@@ -12,25 +12,27 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0qtx4rbg2m0)^*shq&w-z)pofz&x&!t)jy*+7d*9fhyif8h^g@'
-#os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-0qtx4rbg2m0)^*shq&w-z)pofz&x&!t)jy*+7d*9fhyif8h^g@')
+#'django-insecure-0qtx4rbg2m0)^*shq&w-z)pofz&x&!t)jy*+7d*9fhyif8h^g@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-#bool(os.environ.get("DEBUG", default=0))
+DEBUG = bool(os.getenv("DEBUG", default=0))
+#True
 
-
-ALLOWED_HOSTS = []
-#os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS","127.0.0.1").split(",")
+#[]
 
 
 # Application definition
@@ -86,12 +88,14 @@ WSGI_APPLICATION = 'lab4.wsgi.application'
 #}
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'health_db',
-        'USER': 'django_admin',
-        'PASSWORD': 'passw0rd',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        #'django.db.backends.postgresql_psycopg2'
+        'NAME': os.getenv('DATABASE_NAME', 'health_db'),
+        #'health_db',
+        'USER': os.getenv('DATABASE_USERNAME', ''),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
+        'HOST': os.getenv('DATABASE_HOST', ''),
+        'PORT': os.getenv('DATABASE_PORT', ''),
     }
 }
 
