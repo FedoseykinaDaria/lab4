@@ -18,18 +18,23 @@ services:
     
     env_file:
       - ./.env
+    
+    environment:
+      - DEBUG=$DEBUG
+      - SECRET_KEY=$SECRET_KEY
+      - ALLOWED_HOSTS=$ALLOWED_HOSTS
 
     depends_on:
-      -db
+      - db
   
   db:
     image: postgres:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     environment:
-      - POSTGRES_USER: psql_admin
-      - POSTGRES_PASSWORD: passw0rd
-      - POSTGRES_DB: psql_health
+      - POSTGRES_USER=psql_admin
+      - POSTGRES_PASSWORD=passw0rd
+      - POSTGRES_DB=psql_health
 
 volumes:
   postgres_data:
